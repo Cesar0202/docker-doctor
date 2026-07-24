@@ -206,15 +206,11 @@ body {
     align-items: center;
 }
 
-.globe-img {
+.hero-img {
     width: 600px;
     height: 600px;
     object-fit: contain;
-    /* Soft edges blend for AI generated square image */
-    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 65%);
-    mask-image: radial-gradient(circle, black 40%, transparent 65%);
     mix-blend-mode: multiply;
-    animation: pulse 6s infinite ease-in-out alternate;
 }
 
 /* Floating Cards */
