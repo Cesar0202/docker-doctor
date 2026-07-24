@@ -1,0 +1,25 @@
+{
+  "System": {
+    "IsReachable": true
+  },
+  "Containers": {
+    "Total": 1,
+    "Stopped": 1
+  },
+  "Images": {
+    "Total": 1,
+    "Dangling": 0
+  },
+  "Volumes": {
+    "Total": 0,
+    "Orphaned": 0
+  },
+  "Networks": {
+    "Total": 3,
+    "Unused": 0
+  },
+  "Ports": {
+    "TotalExposed": 0,
+    "InUse": []
+  }
+}
