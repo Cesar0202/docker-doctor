@@ -32,6 +32,8 @@ body {
     padding: 1.5rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 100;
     position: sticky;
     top: 0;
     background: rgba(255, 255, 255, 0.9);
@@ -123,6 +125,13 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 100;
 }
 
 .hero-content h1 {
