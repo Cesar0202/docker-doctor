@@ -10,14 +10,14 @@ import (
 )
 
 type ScanHistory struct {
-	ID             uint      `gorm:"primaryKey"`
-	CreatedAt      time.Time
-	TotalContainers int
-	StoppedContainers int
-	TotalImages     int
-	DanglingImages  int
-	TotalVolumes    int
-	OrphanedVolumes int
+	ID                    uint `gorm:"primaryKey"`
+	CreatedAt             time.Time
+	TotalContainers       int
+	StoppedContainers     int
+	TotalImages           int
+	DanglingImages        int
+	TotalVolumes          int
+	OrphanedVolumes       int
 	TotalNetworks         int
 	UnusedNetworks        int
 	HealthScore           int
@@ -28,7 +28,7 @@ var DB *gorm.DB
 
 func InitDB() error {
 	var err error
-	
+
 	// Usamos sqlite pure-go para evitar dependencias CGO y asegurar compatibilidad cross-platform
 	DB, err = gorm.Open(sqlite.Open("docker_doctor.db"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),

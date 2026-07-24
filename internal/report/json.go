@@ -1,10 +1,10 @@
 package report
 
 import (
+	"docker-doctor/internal/db"
 	"encoding/json"
 	"fmt"
 	"os"
-	"docker-doctor/internal/db"
 )
 
 func ExportJSON(data ReportData, hr HealthReport, lastScan db.ScanHistory, recs []Recommendation, filename string) error {

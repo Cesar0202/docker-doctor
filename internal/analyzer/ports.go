@@ -4,8 +4,8 @@ import (
 	"context"
 	"docker-doctor/internal/docker"
 	"fmt"
-	"net"
 	"github.com/docker/docker/api/types/container"
+	"net"
 )
 
 type PortAnalysis struct {
@@ -50,7 +50,7 @@ func AnalyzePorts(ctx context.Context, client *docker.Client) PortAnalysis {
 		if portSet[uint16(port)] {
 			continue
 		}
-		
+
 		// Comprobamos si el puerto está ocupado localmente
 		address := fmt.Sprintf("127.0.0.1:%d", port)
 		listener, err := net.Listen("tcp", address)

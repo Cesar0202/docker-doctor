@@ -64,7 +64,7 @@ var historyCmd = &cobra.Command{
 		fmt.Fprintln(w, "FECHA\tSCORE\tCONTENEDORES\tIMÁGENES\tVOLÚMENES")
 		for _, s := range scans {
 			dateStr := s.CreatedAt.Format("02/01 15:04")
-			
+
 			scoreColor := "\033[36m"
 			if s.HealthScore >= 90 {
 				scoreColor = "\033[32m"
@@ -74,11 +74,11 @@ var historyCmd = &cobra.Command{
 				scoreColor = "\033[31m"
 			}
 
-			fmt.Fprintf(w, "%s\t%s%d\033[0m\t%d\t%d\t%d\n", 
-				dateStr, 
-				scoreColor, s.HealthScore, 
-				s.TotalContainers, 
-				s.TotalImages, 
+			fmt.Fprintf(w, "%s\t%s%d\033[0m\t%d\t%d\t%d\n",
+				dateStr,
+				scoreColor, s.HealthScore,
+				s.TotalContainers,
+				s.TotalImages,
 				s.TotalVolumes)
 		}
 		w.Flush()

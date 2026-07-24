@@ -62,10 +62,18 @@ func getStars(score int) string {
 	if score < 0 {
 		return "N/A"
 	}
-	if score >= 90 { return "★★★★★" }
-	if score >= 75 { return "★★★★☆" }
-	if score >= 50 { return "★★★☆☆" }
-	if score >= 30 { return "★★☆☆☆" }
+	if score >= 90 {
+		return "★★★★★"
+	}
+	if score >= 75 {
+		return "★★★★☆"
+	}
+	if score >= 50 {
+		return "★★★☆☆"
+	}
+	if score >= 30 {
+		return "★★☆☆☆"
+	}
 	return "★☆☆☆☆"
 }
 
@@ -91,7 +99,9 @@ func calculateContainersScore(data report.ReportData) (report.HealthCategory, []
 	} else {
 		details = append(details, report.ScoreDetail{Points: 100, Reason: "No hay contenedores detenidos"})
 	}
-	if score < 0 { score = 0 }
+	if score < 0 {
+		score = 0
+	}
 	return report.HealthCategory{Name: "Contenedores", Score: score, Stars: getStars(score)}, details
 }
 
@@ -105,7 +115,9 @@ func calculateImagesScore(data report.ReportData) (report.HealthCategory, []repo
 	} else {
 		details = append(details, report.ScoreDetail{Points: 100, Reason: "No hay imágenes dangling"})
 	}
-	if score < 0 { score = 0 }
+	if score < 0 {
+		score = 0
+	}
 	return report.HealthCategory{Name: "Imágenes", Score: score, Stars: getStars(score)}, details
 }
 
@@ -119,7 +131,9 @@ func calculateVolumesScore(data report.ReportData) (report.HealthCategory, []rep
 	} else {
 		details = append(details, report.ScoreDetail{Points: 100, Reason: "No hay volúmenes huérfanos"})
 	}
-	if score < 0 { score = 0 }
+	if score < 0 {
+		score = 0
+	}
 	return report.HealthCategory{Name: "Volúmenes", Score: score, Stars: getStars(score)}, details
 }
 
@@ -143,7 +157,9 @@ func calculateSecurityScore(data report.ReportData) (report.HealthCategory, []re
 	} else {
 		details = append(details, report.ScoreDetail{Points: 100, Reason: "Sin vulnerabilidades detectadas"})
 	}
-	if score < 0 { score = 0 }
+	if score < 0 {
+		score = 0
+	}
 	return report.HealthCategory{Name: "Seguridad", Score: score, Stars: getStars(score)}, details
 }
 
@@ -153,7 +169,7 @@ func calculateComposeScore(data report.ReportData) (report.HealthCategory, []rep
 		return report.HealthCategory{Name: "Docker Compose", Score: -1, Stars: "N/A"}, details
 	}
 	score := 100
-	
+
 	if len(data.Compose.MissingTags) > 0 {
 		penalty := len(data.Compose.MissingTags) * 10
 		score -= penalty
@@ -169,11 +185,13 @@ func calculateComposeScore(data report.ReportData) (report.HealthCategory, []rep
 		score -= penalty
 		details = append(details, report.ScoreDetail{Points: -penalty, Reason: fmt.Sprintf("%d servicio(s) en modo privilegiado", len(data.Compose.PrivilegedSvcs))})
 	}
-	
+
 	if score == 100 {
 		details = append(details, report.ScoreDetail{Points: 100, Reason: "Docker Compose configurado correctamente"})
 	}
 
-	if score < 0 { score = 0 }
+	if score < 0 {
+		score = 0
+	}
 	return report.HealthCategory{Name: "Docker Compose", Score: score, Stars: getStars(score)}, details
 }

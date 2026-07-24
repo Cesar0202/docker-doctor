@@ -21,7 +21,8 @@ var fixCmd = &cobra.Command{
 		fmt.Println("========================================")
 		fmt.Println("         DOCKER DOCTOR FIX              ")
 		fmt.Println("========================================")
-		fmt.Println("Buscando problemas reparables en tu entorno...\n")
+		fmt.Println("Buscando problemas reparables en tu entorno...")
+		fmt.Println()
 
 		ctx := context.Background()
 		client, err := docker.NewClient()
@@ -67,7 +68,7 @@ var fixCmd = &cobra.Command{
 
 		if response == "y" || response == "yes" {
 			fmt.Println("\nEjecutando reparaciones...")
-			
+
 			if imgStatus.Dangling > 0 {
 				fmt.Println("Limpiando imágenes...")
 				runSystemCommand("docker", "image", "prune", "-f")
@@ -84,7 +85,7 @@ var fixCmd = &cobra.Command{
 				fmt.Println("Limpiando redes...")
 				runSystemCommand("docker", "network", "prune", "-f")
 			}
-			
+
 			fmt.Println("\n✅ ¡Reparación completada! Tu entorno está limpio.")
 		} else {
 			fmt.Println("\nOperación cancelada. No se ha modificado nada.")

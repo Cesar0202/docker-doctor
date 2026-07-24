@@ -11,12 +11,12 @@ import (
 )
 
 type SecurityStatus struct {
-	TrivyInstalled    bool
-	ScannedImages     int
+	TrivyInstalled       bool
+	ScannedImages        int
 	TotalVulnerabilities int
-	CriticalCount     int
-	HighCount         int
-	Details           []string
+	CriticalCount        int
+	HighCount            int
+	Details              []string
 }
 
 // Estructura simplificada del JSON de Trivy

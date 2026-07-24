@@ -1,17 +1,17 @@
 package report
 
 import (
+	"docker-doctor/internal/db"
 	"fmt"
 	"os"
 	"strings"
-	"docker-doctor/internal/db"
 )
 
 func ExportMarkdown(data ReportData, hr HealthReport, lastScan db.ScanHistory, recs []Recommendation, filename string) error {
 	var builder strings.Builder
 
 	builder.WriteString("# Docker Doctor Report\n\n")
-	
+
 	if data.System.IsReachable {
 		builder.WriteString("## [OK] Sistema Docker\nEstado: Operativo y Accesible\n\n")
 	} else {
@@ -38,7 +38,7 @@ func ExportMarkdown(data ReportData, hr HealthReport, lastScan db.ScanHistory, r
 	builder.WriteString(fmt.Sprintf("- Total Expuestos: %d\n", data.Ports.TotalExposed))
 
 	builder.WriteString(fmt.Sprintf("\n## Docker Health Score: %d/100 (%s)\n\n", hr.GlobalScore, hr.StatusText))
-	
+
 	if lastScan.ID != 0 {
 		deltaScore := hr.GlobalScore - lastScan.HealthScore
 		if deltaScore > 0 {

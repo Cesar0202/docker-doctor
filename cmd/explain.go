@@ -14,7 +14,7 @@ var explainCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		errorMsg := strings.Join(args, " ")
-		
+
 		fmt.Println("========================================")
 		fmt.Println("         DOCKER DOCTOR EXPLAIN          ")
 		fmt.Println("========================================")

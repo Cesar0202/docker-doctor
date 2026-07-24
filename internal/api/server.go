@@ -34,13 +34,13 @@ func Serve(port int) error {
 	if err != nil {
 		return fmt.Errorf("no se encontró el build del frontend (carpeta dist): %w", err)
 	}
-	
+
 	fileServer := http.FileServer(http.FS(distFs))
 	http.Handle("/", fileServer)
 
 	addr := fmt.Sprintf(":%d", port)
 	fmt.Printf("[INFO] Servidor Web iniciado. Abre tu navegador en http://localhost%s\n", addr)
-	
+
 	return http.ListenAndServe(addr, nil)
 }
 
@@ -84,12 +84,12 @@ func handleReport(w http.ResponseWriter, r *http.Request) {
 func handleHistory(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
-	
+
 	scans, err := db.GetLatestScans(10)
 	if err != nil {
 		http.Error(w, `{"error": "No se pudo obtener el historial"}`, http.StatusInternalServerError)
 		return
 	}
-	
+
 	json.NewEncoder(w).Encode(scans)
 }

@@ -25,7 +25,7 @@ func AnalyzeNetworks(ctx context.Context, client *docker.Client) NetworkAnalysis
 		if n.Name == "bridge" || n.Name == "host" || n.Name == "none" {
 			continue
 		}
-		
+
 		// Si no tiene contenedores conectados
 		if len(n.Containers) == 0 {
 			unused++

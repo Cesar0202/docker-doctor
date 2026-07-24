@@ -1,10 +1,10 @@
 package report
 
 import (
+	"docker-doctor/internal/db"
 	"fmt"
 	"html/template"
 	"os"
-	"docker-doctor/internal/db"
 )
 
 const htmlTemplate = `<!DOCTYPE html>

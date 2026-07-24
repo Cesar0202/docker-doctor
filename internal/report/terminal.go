@@ -54,7 +54,7 @@ func PrintTerminalReport(data ReportData, hr HealthReport, lastScan db.ScanHisto
 		} else {
 			fmt.Printf("Health Score: %d ➔ %d (Sin cambios)\n", lastScan.HealthScore, hr.GlobalScore)
 		}
-		
+
 		deltaSpace := hr.TotalRecoverable - lastScan.RecoverableSpaceBytes
 		if deltaSpace != 0 {
 			deltaMB := deltaSpace / 1024 / 1024
