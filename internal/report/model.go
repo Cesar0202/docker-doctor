@@ -16,6 +16,7 @@ type ReportData struct {
 }
 
 type Recommendation struct {
+	Priority              int
 	Level                 string
 	Message               string
 	Command               string
@@ -31,9 +32,15 @@ type HealthCategory struct {
 	Score int
 }
 
+type ScoreDetail struct {
+	Points int
+	Reason string
+}
+
 type HealthReport struct {
 	GlobalScore      int
 	StatusText       string
 	Categories       []HealthCategory
 	TotalRecoverable int64
+	ScoreDetails     []ScoreDetail
 }

@@ -2,6 +2,7 @@ package report
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"docker-doctor/internal/db"
@@ -27,6 +28,21 @@ func PrintTerminalReport(data ReportData, hr HealthReport, lastScan db.ScanHisto
 
 	fmt.Printf("%s[%s] %d/100\033[0m\n\n", scoreColor, hr.StatusText, hr.GlobalScore)
 
+	// Desglose del Puntaje
+	if len(hr.ScoreDetails) > 0 {
+		fmt.Println("Desglose:")
+		fmt.Println()
+		for _, d := range hr.ScoreDetails {
+			if d.Points > 0 {
+				fmt.Printf("\033[32m+%d\033[0m %s\n", d.Points, d.Reason)
+			} else if d.Points < 0 {
+				fmt.Printf("\033[31m%d\033[0m %s\n", d.Points, d.Reason)
+			}
+		}
+		fmt.Printf("\nResultado final:\n%d/100\n\n", hr.GlobalScore)
+		fmt.Println(strings.Repeat("-", 40))
+	}
+
 	// Comparativa con el último escaneo
 	if lastScan.ID != 0 {
 		fmt.Println("Último análisis:")
@@ -48,33 +64,19 @@ func PrintTerminalReport(data ReportData, hr HealthReport, lastScan db.ScanHisto
 				fmt.Printf("Espacio recuperable: \033[31mSubió %d MB\033[0m\n", deltaMB)
 			}
 		}
-		fmt.Println()
+		fmt.Println(strings.Repeat("-", 40))
 	}
 
-	// Puntaje por Categorías
-	fmt.Println("Puntaje por categorías:")
-	for _, cat := range hr.Categories {
-		if cat.Score >= 0 {
-			fmt.Printf("%-15s %s\n", cat.Name, cat.Stars)
-		}
-	}
-	fmt.Println("========================================")
+	// Ordenar recomendaciones por Prioridad descendente
+	sort.Slice(recs, func(i, j int) bool {
+		return recs[i].Priority > recs[j].Priority
+	})
 
 	// Recomendaciones
 	if len(recs) > 0 {
 		fmt.Println("\nProblemas encontrados y Recomendaciones:")
 		for _, r := range recs {
-			color := "\033[36m"
-			prefix := "[INFO]"
-			if r.Level == "WARNING" {
-				color = "\033[33m"
-				prefix = "[WARNING]"
-			} else if r.Level == "CRITICAL" {
-				color = "\033[31m"
-				prefix = "[CRITICAL]"
-			}
-
-			fmt.Printf("\n%s%s %s\033[0m\n", color, prefix, r.Message)
+			fmt.Printf("\n%s\n%s\n", r.Level, r.Message)
 
 			if r.Why != "" {
 				fmt.Printf("\n¿Por qué importa?\n%s\n", r.Why)
@@ -98,6 +100,24 @@ func PrintTerminalReport(data ReportData, hr HealthReport, lastScan db.ScanHisto
 			fmt.Printf("\nComando recomendado:\n\033[1m%s\033[0m\n", r.Command)
 			fmt.Println(strings.Repeat("-", 40))
 		}
+
+		// Acciones prioritarias
+		fmt.Println("\n==========================")
+		fmt.Println("   Acciones Prioritarias")
+		fmt.Println("==========================")
+		for i, r := range recs {
+			if i >= 3 {
+				break
+			}
+			fmt.Printf("\n%d. Ejecutar:\n\033[1m%s\033[0m\n", i+1, r.Command)
+			if r.RecoverableSpaceBytes > 0 {
+				fmt.Printf("Ganancia estimada:\n%d MB\n", r.RecoverableSpaceBytes/1024/1024)
+			}
+			if r.Risk != "" {
+				fmt.Printf("Riesgo:\n%s\n", r.Risk)
+			}
+		}
+
 	} else {
 		fmt.Println("\n¡Tu entorno está limpio y optimizado! No hay recomendaciones.")
 	}
