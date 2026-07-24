@@ -41,6 +41,6 @@ func ExportMarkdown(data ReportData, filename string) error {
 		return fmt.Errorf("error escribiendo archivo Markdown: %w", err)
 	}
 
-	fmt.Printf("✅ Reporte Markdown exportado exitosamente a %s\n", filename)
+	fmt.Printf("[OK] Reporte Markdown exportado exitosamente a %s\n", filename)
 	return nil
 }

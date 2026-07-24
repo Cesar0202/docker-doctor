@@ -17,6 +17,6 @@ func ExportJSON(data ReportData, filename string) error {
 		return fmt.Errorf("error escribiendo archivo JSON: %w", err)
 	}
 
-	fmt.Printf("✅ Reporte JSON exportado exitosamente a %s\n", filename)
+	fmt.Printf("[OK] Reporte JSON exportado exitosamente a %s\n", filename)
 	return nil
 }

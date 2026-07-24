@@ -1,23 +1,23 @@
 # Docker Doctor Report
 
-## ✅ Sistema Docker
+## [OK] Sistema Docker
 Estado: Operativo y Accesible
 
-## 📦 Contenedores
+## Contenedores
 - Total: 1
 - Detenidos: 1
 
-## 🖼️ Imágenes
+## Imágenes
 - Total: 1
 - Dangling (Huérfanas): 0
 
-## 💾 Volúmenes
+## Volúmenes
 - Total: 0
 - Huérfanos: 0
 
-## 🌐 Redes
+## Redes
 - Total: 3
 - Sin uso: 0
 
-## 🚪 Puertos
+## Puertos
 - Total Expuestos: 0

@@ -80,6 +80,6 @@ func ExportHTML(data ReportData, filename string) error {
 		return fmt.Errorf("error ejecutando plantilla HTML: %w", err)
 	}
 
-	fmt.Printf("✅ Reporte HTML exportado exitosamente a %s\n", filename)
+	fmt.Printf("[OK] Reporte HTML exportado exitosamente a %s\n", filename)
 	return nil
 }
