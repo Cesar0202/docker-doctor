@@ -59,14 +59,14 @@
                 
                 <div id="doc-install" class="doc-block">
                     <h3>1. Instalación</h3>
-                    <p>Docker Doctor es un binario estático compilado en Go, lo que significa que no requiere dependencias como Node o Python. La forma recomendada es a través de <code>go install</code>:</p>
-                    <div class="code-box doc-code">
-                        <code id="install-code">go install github.com/Cesar0202/docker-doctor@latest</code>
-                        <button class="copy-btn" onclick="copyCode()">
-                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <p>La forma más rápida, limpia y profesional de instalar Docker Doctor en cualquier servidor Linux o Mac es usando nuestro script de instalación. No requiere tener Go instalado:</p>
+                    <div class="code-box">
+                        <code id="install-code">curl -sSL https://raw.githubusercontent.com/Cesar0202/docker-doctor/main/install.sh | bash</code>
+                        <button class="copy-btn" onclick="copyCode()" aria-label="Copiar código">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </button>
                     </div>
-                    <p>Si usas Windows o no tienes Go, puedes descargar el ejecutable <code>doctor.exe</code> directamente desde los Releases en GitHub.</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #57606a;">También puedes compilarlo desde el código fuente usando <code>go install github.com/Cesar0202/docker-doctor@latest</code> si tienes un entorno de desarrollo Go configurado.</p>
                 </div>
 
                 <div id="doc-cli" class="doc-block">
