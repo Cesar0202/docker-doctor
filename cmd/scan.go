@@ -7,7 +7,9 @@ import (
 	"strings"
 
 	"docker-doctor/internal/analyzer"
+	"docker-doctor/internal/db"
 	"docker-doctor/internal/docker"
+	"docker-doctor/internal/recommender"
 	"docker-doctor/internal/report"
 
 	"github.com/spf13/cobra"
@@ -47,6 +49,21 @@ var scanCmd = &cobra.Command{
 			Ports:      portStatus,
 		}
 
+		// Guardar el historial en la base de datos (ignorar errores para no detener la ejecución)
+		_ = db.SaveScan(db.ScanHistory{
+			TotalContainers:   contStatus.Total,
+			StoppedContainers: contStatus.Stopped,
+			TotalImages:       imgStatus.Total,
+			DanglingImages:    imgStatus.Dangling,
+			TotalVolumes:      volStatus.Total,
+			OrphanedVolumes:   volStatus.Orphaned,
+			TotalNetworks:     netStatus.Total,
+			UnusedNetworks:    netStatus.Unused,
+		})
+
+		// Generar recomendaciones
+		recs := recommender.GenerateRecommendations(data)
+
 		switch strings.ToLower(outputFormat) {
 		case "json":
 			if outputFile == "" {
@@ -65,6 +82,20 @@ var scanCmd = &cobra.Command{
 			report.ExportMarkdown(data, outputFile)
 		default:
 			report.PrintTerminalReport(data)
+			if len(recs) > 0 {
+				fmt.Println("\n=== 💡 RECOMENDACIONES DE LA IA ===")
+				for _, r := range recs {
+					color := "\033[36m" // Cyan para INFO
+					if r.Level == "WARNING" {
+						color = "\033[33m" // Yellow
+					} else if r.Level == "CRITICAL" {
+						color = "\033[31m" // Red
+					}
+					fmt.Printf("%s[%s]\033[0m %s\n", color, r.Level, r.Message)
+					fmt.Printf("    Sugiero: \033[1m%s\033[0m\n", r.Command)
+				}
+				fmt.Println("===================================")
+			}
 		}
 	},
 }

@@ -8,14 +8,23 @@ import (
 	"net/http"
 
 	"docker-doctor/internal/analyzer"
+	"docker-doctor/internal/db"
 	"docker-doctor/internal/docker"
+	"docker-doctor/internal/recommender"
 	"docker-doctor/internal/report"
 	"docker-doctor/web"
 )
 
+// Extendemos ReportData para la API para incluir recomendaciones
+type APIResponse struct {
+	report.ReportData
+	Recommendations []recommender.Recommendation
+}
+
 func Serve(port int) error {
-	// 1. Configurar ruta de la API
+	// 1. Configurar rutas de la API
 	http.HandleFunc("/api/report", handleReport)
+	http.HandleFunc("/api/history", handleHistory)
 
 	// 2. Extraer y servir la carpeta dist/
 	distFs, err := fs.Sub(web.DistFS, "dist")
@@ -53,5 +62,25 @@ func handleReport(w http.ResponseWriter, r *http.Request) {
 		Ports:      analyzer.AnalyzePorts(ctx, client),
 	}
 
-	json.NewEncoder(w).Encode(data)
+	recs := recommender.GenerateRecommendations(data)
+
+	response := APIResponse{
+		ReportData:      data,
+		Recommendations: recs,
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleHistory(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	
+	scans, err := db.GetLatestScans(10)
+	if err != nil {
+		http.Error(w, `{"error": "No se pudo obtener el historial"}`, http.StatusInternalServerError)
+		return
+	}
+	
+	json.NewEncoder(w).Encode(scans)
 }
