@@ -80,6 +80,70 @@ var Database = []ErrorPattern{
 			Confidence: "99%",
 		},
 	},
+	{
+		Regex: regexp.MustCompile(`(?i)Error response from daemon: conflict`),
+		Response: Explanation{
+			Diagnosis: "Hay un conflicto de nombres o dependencias dentro de Docker.",
+			Causes: []string{
+				"Estás intentando crear un contenedor con un nombre que ya existe",
+				"Estás intentando borrar una imagen que está siendo usada por un contenedor detenido",
+				"Estás intentando borrar una red que tiene contenedores conectados",
+			},
+			Commands: []string{
+				"docker ps -a (para buscar el contenedor con ese nombre)",
+				"docker rm -f <nombre> (para forzar el borrado si es necesario)",
+			},
+			Confidence: "95%",
+		},
+	},
+	{
+		Regex: regexp.MustCompile(`(?i)Network timed out|i/o timeout|net/http: TLS handshake timeout`),
+		Response: Explanation{
+			Diagnosis: "Problemas de red al intentar comunicarse con el registro (ej. Docker Hub).",
+			Causes: []string{
+				"Tu conexión a internet está fallando",
+				"Estás detrás de un proxy corporativo o VPN que bloquea el tráfico",
+				"Docker Hub está caído temporalmente",
+			},
+			Commands: []string{
+				"Verifica tu conexión a internet",
+				"Si usas proxy, revisa la configuración en ~/.docker/config.json",
+			},
+			Confidence: "90%",
+		},
+	},
+	{
+		Regex: regexp.MustCompile(`(?i)No such file or directory`),
+		Response: Explanation{
+			Diagnosis: "Docker no encuentra un archivo o ruta que le indicaste.",
+			Causes: []string{
+				"Estás montando un volumen (-v) con una ruta en tu disco que no existe",
+				"El archivo ENTRYPOINT o CMD del Dockerfile no existe dentro del contenedor",
+				"Windows vs Linux: Estás usando rutas con '\\' en vez de '/' en volúmenes cruzados",
+			},
+			Commands: []string{
+				"Revisa cuidadosamente las rutas absolutas en tus comandos de volumen",
+				"Si es de un Dockerfile, verifica que el COPY copió el archivo correctamente",
+			},
+			Confidence: "85%",
+		},
+	},
+	{
+		Regex: regexp.MustCompile(`(?i)Failed to create containerd task|executable file not found in \$PATH`),
+		Response: Explanation{
+			Diagnosis: "El contenedor intentó arrancar pero su comando principal falló desde el sistema operativo base.",
+			Causes: []string{
+				"El script de inicio (entrypoint.sh) no tiene permisos de ejecución (+x)",
+				"El binario o comando principal no existe en el contenedor",
+				"Intentaste ejecutar un binario compilado para otra arquitectura (ej. de ARM a AMD64)",
+			},
+			Commands: []string{
+				"chmod +x entrypoint.sh (si usas un script de entrada)",
+				"Verifica que la imagen base (FROM) contenga las librerías necesarias",
+			},
+			Confidence: "85%",
+		},
+	},
 }
 
 func AnalyzeError(errorMsg string) *Explanation {
