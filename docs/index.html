@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Doctor - Tu entorno Docker, curado</title>
+    <meta name="description" content="Sistema experto para diagnosticar, monitorear y optimizar tus entornos Docker.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">🩺</span>
+            <span class="logo-text">Docker<span class="highlight">Doctor</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#features">Características</a>
+            <a href="#install">Instalación</a>
+            <a href="https://github.com/Cesar0202/docker-doctor" target="_blank" class="github-btn">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="badge fade-in">v1.0.0 Ya Disponible</div>
+            <h1 class="fade-in delay-1">Tu entorno Docker,<br> <span class="gradient-text">completamente curado.</span></h1>
+            <p class="fade-in delay-2">Un Sistema Experto de terminal que analiza tu infraestructura, detecta problemas antes de que ocurran y te dice exactamente qué hacer para solucionarlos.</p>
+            
+            <div class="cta-group fade-in delay-3">
+                <a href="#install" class="btn btn-primary">Instalar Gratis</a>
+                <a href="#features" class="btn btn-secondary">Explorar Funciones</a>
+            </div>
+            
+            <div class="terminal-window fade-in delay-4">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">bash</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="cmd-line"><span class="prompt">$</span> docker-doctor scan</div>
+                    <div class="output">
+                        <span class="cyan">========================================</span><br>
+                        <span class="cyan">         DOCKER DOCTOR</span><br>
+                        <span class="cyan">========================================</span><br><br>
+                        Docker Health Score<br><br>
+                        <span class="green">[Excelente] 97/100</span><br><br>
+                        <span class="gray">Último análisis:</span><br>
+                        Health Score: 88 ➔ 97 (<span class="green">Mejoró 9 pts ↑</span>)<br><br>
+                        <span class="red">🔴 Crítico</span><br>
+                        ❌ Puerto 5432 ocupado localmente<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features-section">
+        <h2 class="section-title">El DevOps de tu Sala de Servidores</h2>
+        <div class="features-grid">
+            <div class="feature-card glass">
+                <div class="feature-icon">📊</div>
+                <h3>Health Score Matemático</h3>
+                <p>Recibe una calificación de 0 a 100 basada en el estado de tus contenedores, imágenes huérfanas, seguridad y configuraciones.</p>
+            </div>
+            <div class="feature-card glass">
+                <div class="feature-icon">🤖</div>
+                <h3>Asistente Experto (Explain)</h3>
+                <p>¿Error "Bind for 0.0.0.0:80 failed"? Docker Doctor interpreta los errores crípticos y te dice la causa exacta y el comando para arreglarlo.</p>
+            </div>
+            <div class="feature-card glass">
+                <div class="feature-icon">✨</div>
+                <h3>Reparación Interactiva (Fix)</h3>
+                <p>No más comandos largos de limpieza. El comando interactivo escanea tu basura y te permite eliminarla con presionar "Y".</p>
+            </div>
+            <div class="feature-card glass">
+                <div class="feature-icon">📈</div>
+                <h3>Tendencias Históricas</h3>
+                <p>Dibuja hermosas gráficas ASCII en tu propia terminal para ver cómo ha mejorado (o empeorado) la salud de tu entorno.</p>
+            </div>
+            <div class="feature-card glass">
+                <div class="feature-icon">🔍</div>
+                <h3>Detección de Conflictos</h3>
+                <p>Escanea silenciosamente los puertos de tu sistema para avisarte de colisiones antes de que levantes un contenedor nuevo.</p>
+            </div>
+            <div class="feature-card glass">
+                <div class="feature-icon">🖥️</div>
+                <h3>Dashboard Web Local</h3>
+                <p>Levanta una interfaz gráfica embebida súper minimalista con un solo comando para monitoreo en tiempo real.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="install" class="install-section">
+        <h2 class="section-title">Comienza en segundos</h2>
+        <p class="install-subtitle">Compilado en un solo binario. Cero dependencias externas (Ni Node, ni Python).</p>
+        
+        <div class="install-card glass">
+            <h3>Si tienes Go instalado:</h3>
+            <div class="code-block">
+                <code id="go-install">go install github.com/Cesar0202/docker-doctor@latest</code>
+                <button class="copy-btn" data-target="go-install">Copiar</button>
+            </div>
+            <p class="hint">Una vez instalado, el comando `docker-doctor` estará disponible en cualquier terminal.</p>
+        </div>
+
+        <div class="install-card glass">
+            <h3>Descarga Manual (Binarios precompilados)</h3>
+            <p class="hint" style="margin-top: 0; text-align: left;">Descarga el archivo <code>doctor.exe</code> o <code>docker-doctor-linux-amd64</code> desde los <a href="https://github.com/Cesar0202/docker-doctor/releases" target="_blank" style="color: var(--primary);">Releases de GitHub</a> y agrégalo a tu PATH.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>Hecho con ❤️ para la comunidad DevOps. Cero telemetría, 100% código abierto.</p>
+            <p>&copy; 2026 Docker Doctor. Licencia MIT.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
