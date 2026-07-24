@@ -18,7 +18,7 @@ import (
 // Extendemos ReportData para la API para incluir recomendaciones
 type APIResponse struct {
 	report.ReportData
-	Recommendations []recommender.Recommendation
+	Recommendations []report.Recommendation
 }
 
 func Serve(port int) error {

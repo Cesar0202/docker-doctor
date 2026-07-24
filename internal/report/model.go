@@ -14,3 +14,26 @@ type ReportData struct {
 	Security   analyzer.SecurityStatus
 	Compose    analyzer.ComposeAnalysis
 }
+
+type Recommendation struct {
+	Level                 string
+	Message               string
+	Command               string
+	Why                   string
+	Impact                string
+	Risk                  string
+	RecoverableSpaceBytes int64
+}
+
+type HealthCategory struct {
+	Name  string
+	Stars string
+	Score int
+}
+
+type HealthReport struct {
+	GlobalScore      int
+	StatusText       string
+	Categories       []HealthCategory
+	TotalRecoverable int64
+}

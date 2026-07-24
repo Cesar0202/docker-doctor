@@ -18,8 +18,10 @@ type ScanHistory struct {
 	DanglingImages  int
 	TotalVolumes    int
 	OrphanedVolumes int
-	TotalNetworks   int
-	UnusedNetworks  int
+	TotalNetworks         int
+	UnusedNetworks        int
+	HealthScore           int
+	RecoverableSpaceBytes int64
 }
 
 var DB *gorm.DB
@@ -57,4 +59,13 @@ func GetLatestScans(limit int) ([]ScanHistory, error) {
 	}
 	err := DB.Order("created_at desc").Limit(limit).Find(&scans).Error
 	return scans, err
+}
+
+func GetLastScan() (ScanHistory, error) {
+	var scan ScanHistory
+	if DB == nil {
+		return scan, fmt.Errorf("base de datos no inicializada")
+	}
+	err := DB.Order("created_at desc").First(&scan).Error
+	return scan, err
 }

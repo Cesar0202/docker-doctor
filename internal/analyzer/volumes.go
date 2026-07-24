@@ -3,35 +3,38 @@ package analyzer
 import (
 	"context"
 	"docker-doctor/internal/docker"
-	"github.com/docker/docker/api/types/volume"
+	"github.com/docker/docker/api/types"
 )
 
 type VolumeAnalysis struct {
-	Total    int
-	Orphaned int
+	Total                 int
+	Orphaned              int
+	RecoverableSpaceBytes int64
 }
 
 func AnalyzeVolumes(ctx context.Context, client *docker.Client) VolumeAnalysis {
-	// Obtenemos todos los volúmenes
-	volumes, err := client.Cli.VolumeList(ctx, volume.ListOptions{})
+	// Usamos DiskUsage para obtener información exacta de uso y tamaño
+	du, err := client.Cli.DiskUsage(ctx, types.DiskUsageOptions{})
 	if err != nil {
 		return VolumeAnalysis{}
 	}
 
-	total := len(volumes.Volumes)
+	total := len(du.Volumes)
 	orphaned := 0
+	var recoverable int64
 
-	// Un volumen se considera huérfano si no está siendo usado por ningún contenedor (UsageData no presente o RefCount == 0)
-	// Pero VolumeList básico no siempre trae UsageData a menos que se invoque DiskUsage.
-	// Haremos una aproximación con UsageData si está disponible.
-	for _, v := range volumes.Volumes {
+	for _, v := range du.Volumes {
 		if v.UsageData == nil || v.UsageData.RefCount == 0 {
 			orphaned++
+			if v.UsageData != nil {
+				recoverable += v.UsageData.Size
+			}
 		}
 	}
 
 	return VolumeAnalysis{
-		Total:    total,
-		Orphaned: orphaned,
+		Total:                 total,
+		Orphaned:              orphaned,
+		RecoverableSpaceBytes: recoverable,
 	}
 }
