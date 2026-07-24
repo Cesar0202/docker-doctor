@@ -79,6 +79,9 @@ Levanta el servidor integrado para explorar los datos gráficamente. Incluye gr�
 ```bash
 docker-doctor web
 # Por defecto se abre en el puerto 8080 (http://localhost:8080)
+
+# Puedes usar otro puerto si el 8080 está ocupado:
+docker-doctor web --port 3000
 ```
 
 ---
