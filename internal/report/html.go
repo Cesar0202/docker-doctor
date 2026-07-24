@@ -26,36 +26,36 @@ const htmlTemplate = `<!DOCTYPE html>
 </head>
 <body>
     <div class="container">
-        <h1>Docker Doctor Report 🩺</h1>
+        <h1>Docker Doctor Report</h1>
         
         <div class="card {{if .System.IsReachable}}success{{else}}danger{{end}}">
             <h3>Estado del Sistema</h3>
-            <p>{{if .System.IsReachable}}✅ Operativo y Accesible{{else}}❌ Inaccesible{{end}}</p>
+            <p>{{if .System.IsReachable}}[OK] Operativo y Accesible{{else}}[FAIL] Inaccesible{{end}}</p>
         </div>
 
         <div class="grid">
             <div class="card">
-                <h3>📦 Contenedores</h3>
+                <h3>Contenedores</h3>
                 <p>Total: <strong>{{.Containers.Total}}</strong></p>
                 <p>Detenidos: <strong>{{.Containers.Stopped}}</strong></p>
             </div>
             <div class="card">
-                <h3>🖼️ Imágenes</h3>
+                <h3>Imágenes</h3>
                 <p>Total: <strong>{{.Images.Total}}</strong></p>
                 <p>Dangling: <strong>{{.Images.Dangling}}</strong></p>
             </div>
             <div class="card">
-                <h3>💾 Volúmenes</h3>
+                <h3>Volúmenes</h3>
                 <p>Total: <strong>{{.Volumes.Total}}</strong></p>
                 <p>Huérfanos: <strong>{{.Volumes.Orphaned}}</strong></p>
             </div>
             <div class="card">
-                <h3>🌐 Redes</h3>
+                <h3>Redes</h3>
                 <p>Total: <strong>{{.Networks.Total}}</strong></p>
                 <p>Sin Uso: <strong>{{.Networks.Unused}}</strong></p>
             </div>
             <div class="card">
-                <h3>🚪 Puertos</h3>
+                <h3>Puertos</h3>
                 <p>Total Expuestos: <strong>{{.Ports.TotalExposed}}</strong></p>
             </div>
         </div>
