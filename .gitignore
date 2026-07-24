@@ -1,0 +1,21 @@
+# Binaries
+*.exe
+docker-doctor-linux-amd64
+doctor
+docker-doctor
+
+# Database
+*.db
+docker_doctor.db
+docker_doctor.db-journal
+
+# Go
+vendor/
+*.test
+
+# Mac/OSX
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
