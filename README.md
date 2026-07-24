@@ -77,7 +77,7 @@ docker-doctor scan --output html --file reporte.html
 ### 6. Dashboard Web en Tiempo Real
 Levanta el servidor integrado para explorar los datos gráficamente. Incluye gráficas de consumo, historial y recomendaciones.
 ```bash
-docker-doctor serve
+docker-doctor web
 # Por defecto se abre en el puerto 8080 (http://localhost:8080)
 ```
 
