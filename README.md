@@ -18,22 +18,21 @@ Docker Doctor no es solo un visor de datos, es un **Sistema Experto** diseñado 
 
 ## Instalación
 
-### Opción 1: Usando Go (Recomendado)
-Si tienes Go instalado en tu máquina, puedes instalar Docker Doctor de forma global para que funcione desde cualquier terminal:
+### Opción 1: Instalar directamente el Binario (Recomendado)
+**¡No necesitas tener Go instalado!** Docker Doctor es un binario independiente. Puedes instalarlo en cualquier servidor Linux o macOS en segundos con nuestro script de instalación rápida:
 
 ```bash
-go install
+curl -sSL https://raw.githubusercontent.com/Cesar0202/docker-doctor/main/install.sh | bash
+```
+*(Este script detecta tu sistema operativo y arquitectura, descarga el ejecutable oficial desde GitHub Releases y lo coloca en `/usr/local/bin` para que puedas usarlo de inmediato).*
+
+### Opción 2: Compilar desde el código fuente (Desarrolladores)
+Si prefieres compilarlo tú mismo o ya tienes un entorno de Go (`go1.21+`) configurado, puedes usar:
+
+```bash
+go install github.com/Cesar0202/docker-doctor@latest
 ```
 *(Esto compilará el código y lo guardará en tu carpeta `go/bin`, que suele estar en tu `PATH`).*
-
-### Opción 2: Compilar el binario manualmente
-```bash
-# Para Windows:
-go build -o docker-doctor.exe main.go
-
-# Para Servidores Linux (Cross-Compilation):
-$env:GOOS="linux"; $env:GOARCH="amd64"; go build -o docker-doctor-linux main.go
-```
 
 ---
 
