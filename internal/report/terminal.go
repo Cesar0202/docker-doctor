@@ -48,20 +48,20 @@ func PrintTerminalReport(data ReportData, hr HealthReport, lastScan db.ScanHisto
 		fmt.Println("Último análisis:")
 		deltaScore := hr.GlobalScore - lastScan.HealthScore
 		if deltaScore > 0 {
-			fmt.Printf("Health Score: %d ↓ %d (\033[32mMejoró %d pts\033[0m)\n", lastScan.HealthScore, hr.GlobalScore, deltaScore)
+			fmt.Printf("Health Score: %d ➔ %d (\033[32mMejoró %d pts ↑\033[0m)\n", lastScan.HealthScore, hr.GlobalScore, deltaScore)
 		} else if deltaScore < 0 {
-			fmt.Printf("Health Score: %d ↓ %d (\033[31mEmpeoró %d pts\033[0m)\n", lastScan.HealthScore, hr.GlobalScore, -deltaScore)
+			fmt.Printf("Health Score: %d ➔ %d (\033[31mEmpeoró %d pts ↓\033[0m)\n", lastScan.HealthScore, hr.GlobalScore, -deltaScore)
 		} else {
-			fmt.Printf("Health Score: %d ↓ %d (Sin cambios)\n", lastScan.HealthScore, hr.GlobalScore)
+			fmt.Printf("Health Score: %d ➔ %d (Sin cambios)\n", lastScan.HealthScore, hr.GlobalScore)
 		}
 		
 		deltaSpace := hr.TotalRecoverable - lastScan.RecoverableSpaceBytes
 		if deltaSpace != 0 {
 			deltaMB := deltaSpace / 1024 / 1024
 			if deltaMB < 0 {
-				fmt.Printf("Espacio recuperable: \033[32mBajó %d MB\033[0m\n", -deltaMB)
+				fmt.Printf("Espacio recuperable: \033[32mBajó %d MB ↓\033[0m\n", -deltaMB)
 			} else if deltaMB > 0 {
-				fmt.Printf("Espacio recuperable: \033[31mSubió %d MB\033[0m\n", deltaMB)
+				fmt.Printf("Espacio recuperable: \033[31mSubió %d MB ↑\033[0m\n", deltaMB)
 			}
 		}
 		fmt.Println(strings.Repeat("-", 40))
