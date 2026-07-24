@@ -5,7 +5,7 @@ Estado: Operativo y Accesible
 
 ## Contenedores
 - Total: 1
-- Detenidos: 1
+- Detenidos: 0
 
 ## Imágenes
 - Total: 1
@@ -21,3 +21,16 @@ Estado: Operativo y Accesible
 
 ## Puertos
 - Total Expuestos: 0
+
+## Docker Health Score: 90/100 (Excelente)
+
+### Categorías
+- Docker Engine: ★★★★★
+- Contenedores: ★★★★★
+- Imágenes: ★★★★★
+- Volúmenes: ★★★★★
+- Seguridad: N/A (Trivy no instalado)
+
+## 💡 Recomendaciones de la IA
+
+¡Tu entorno está limpio y optimizado! No hay recomendaciones.

@@ -71,20 +71,6 @@ func handleReport(w http.ResponseWriter, r *http.Request) {
 	hr := health.CalculateHealth(data)
 	lastScan, _ := db.GetLastScan()
 
-	// Guardar el nuevo escaneo para que history siga fluyendo
-	_ = db.SaveScan(db.ScanHistory{
-		TotalContainers:       data.Containers.Total,
-		StoppedContainers:     data.Containers.Stopped,
-		TotalImages:           data.Images.Total,
-		DanglingImages:        data.Images.Dangling,
-		TotalVolumes:          data.Volumes.Total,
-		OrphanedVolumes:       data.Volumes.Orphaned,
-		TotalNetworks:         data.Networks.Total,
-		UnusedNetworks:        data.Networks.Unused,
-		HealthScore:           hr.GlobalScore,
-		RecoverableSpaceBytes: hr.TotalRecoverable,
-	})
-
 	response := APIResponse{
 		ReportData:      data,
 		Recommendations: recs,
