@@ -18,27 +18,38 @@ else
     exit 1
 fi
 
-REPO="Cesar0202/docker-doctor"
-BINARY_NAME="docker-doctor"
-
-echo "Detectado: $OS-$ARCH"
-
-# Aquí normalmente se descargaría el binario desde los Releases de GitHub.
-# Ejemplo:
-# DOWNLOAD_URL="https://github.com/$REPO/releases/latest/download/${BINARY_NAME}-${OS}-${ARCH}"
-# curl -sSL -o $BINARY_NAME $DOWNLOAD_URL
-
-echo ""
-echo "[AVISO PARA CESAR]: Aún no has creado un 'Release' en GitHub con los binarios compilados."
-echo "Por ahora, este script intentará usar 'go install' si Go está instalado."
-echo ""
-
-if command -v go &> /dev/null; then
-    echo "-> Go está instalado. Compilando..."
-    go install github.com/$REPO@latest
-    echo "¡Instalado con éxito usando Go!"
-else
-    echo "ERROR: No se encontró Go en este sistema y aún no hay binarios pre-compilados en GitHub Releases."
-    echo "Por favor, para probarlo en este servidor sin instalar Go, debes compilarlo en tu PC local (GOOS=linux GOARCH=amd64 go build) y subir el archivo al servidor."
+# Ajuste si es darwin (macOS) - aunque ahorita solo compilamos linux y windows
+# Lo dejamos preparado para el futuro.
+if [ "$OS" = "darwin" ]; then
+    echo "Aún no hay binarios para macOS. Por favor usa 'go install github.com/Cesar0202/docker-doctor@latest'"
     exit 1
 fi
+
+REPO="Cesar0202/docker-doctor"
+BINARY_NAME="docker-doctor"
+FILENAME="${BINARY_NAME}-${OS}-${ARCH}"
+
+DOWNLOAD_URL="https://github.com/$REPO/releases/latest/download/${FILENAME}"
+
+echo "Detectado: $OS-$ARCH"
+echo "Descargando desde: $DOWNLOAD_URL"
+
+# Descargar el binario en un archivo temporal
+TMP_FILE=$(mktemp)
+curl -sSL -f -o "$TMP_FILE" "$DOWNLOAD_URL" || {
+    echo "Error: No se pudo descargar el binario (¿Revisaste si el Release existe en GitHub?)"
+    rm -f "$TMP_FILE"
+    exit 1
+}
+
+# Dar permisos de ejecución
+chmod +x "$TMP_FILE"
+
+# Mover a /usr/local/bin
+INSTALL_DIR="/usr/local/bin"
+echo "Instalando en $INSTALL_DIR (puede pedir contraseña de sudo)..."
+sudo mv "$TMP_FILE" "$INSTALL_DIR/$BINARY_NAME"
+
+echo ""
+echo "¡Instalación completada con éxito! 🎉"
+echo "Puedes probarlo ejecutando: docker-doctor"
