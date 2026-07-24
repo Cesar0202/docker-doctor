@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación - Docker Doctor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <a href="index.html" style="text-decoration: none; color: inherit;">Docker Doctor</a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html#features">Características</a>
+            <a href="index.html#dashboard">Dashboard Web</a>
+            <a href="docs.html" style="color: var(--text-color); font-weight: 700;">Documentación</a>
+            <a href="https://github.com/Cesar0202/docker-doctor" target="_blank">GitHub</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="docs.html#doc-install" class="btn btn-primary">Instalar CLI</a>
+        </div>
+    </nav>
+
+    <!-- GitHub Floating Badge (Fixed globally) -->
+    <a href="https://github.com/Cesar0202" target="_blank" class="github-float">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        <span>Sigue en GitHub</span>
+    </a>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="section docs-section" style="padding-top: 2rem;">
+        <div class="section-header">
+            <h2>Documentación Oficial</h2>
+            <p>Aprende a integrar Docker Doctor en tu flujo de trabajo diario, desde tu terminal local hasta pipelines de integración continua.</p>
+        </div>
+        
+        <div class="docs-container">
+            <!-- Columna Izquierda: Índice -->
+            <div class="docs-sidebar">
+                <ul>
+                    <li><a href="#doc-install">1. Instalación</a></li>
+                    <li><a href="#doc-cli">2. Uso de la CLI</a></li>
+                    <li><a href="#doc-fix">3. Asistente Proactivo (Fix)</a></li>
+                    <li><a href="#doc-explain">4. Experto en Errores</a></li>
+                    <li><a href="#doc-cicd">5. Exportación y CI/CD</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna Derecha: Contenido -->
+            <div class="docs-content">
+                
+                <div id="doc-install" class="doc-block">
+                    <h3>1. Instalación</h3>
+                    <p>Docker Doctor es un binario estático compilado en Go, lo que significa que no requiere dependencias como Node o Python. La forma recomendada es a través de <code>go install</code>:</p>
+                    <div class="code-box doc-code">
+                        <code id="install-code">go install github.com/Cesar0202/docker-doctor@latest</code>
+                        <button class="copy-btn" onclick="copyCode()">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                    </div>
+                    <p>Si usas Windows o no tienes Go, puedes descargar el ejecutable <code>doctor.exe</code> directamente desde los Releases en GitHub.</p>
+                </div>
+
+                <div id="doc-cli" class="doc-block">
+                    <h3>2. Uso de la CLI (Escaneo General)</h3>
+                    <p>Para obtener un diagnóstico rápido del estado de tus contenedores, redes, volúmenes e imágenes, ejecuta el comando principal. El motor evaluará métricas y te dará un <strong>Health Score</strong> sobre 100.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor scan</span><br>
+                            <span class="out">Iniciando escaneo de Docker...</span><br>
+                            <span class="out">Docker Health Score: [Excelente] 97/100</span><br>
+                            <span class="out">Evaluando puertos locales y docker-compose.yml...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-fix" class="doc-block">
+                    <h3>3. Asistente Proactivo (Fix)</h3>
+                    <p>Olvídate de buscar en Google cómo borrar contenedores detenidos o imágenes dangling. Docker Doctor detecta los problemas y te ofrece eliminarlos de forma interactiva y segura, calculando el ahorro exacto en Megabytes.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor fix</span><br>
+                            <span class="out">Problema: Tienes imágenes colgantes (dangling).</span><br>
+                            <span class="out">Ahorro estimado: 1.2 GB</span><br>
+                            <span class="out">¿Deseas aplicar el comando [docker image prune -f]? (s/N): s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-explain" class="doc-block">
+                    <h3>4. Experto en Errores (Explain)</h3>
+                    <p>Docker Doctor cuenta con una base de conocimiento para interpretar errores crípticos de Docker. Solo pégale el error y la IA estática te dirá qué significa y cómo resolverlo.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor explain "no space left on device"</span><br>
+                            <span class="out">Diagnóstico: El disco duro donde Docker guarda sus datos está lleno.</span><br>
+                            <span class="out">Comandos útiles: docker system prune -a --volumes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-cicd" class="doc-block">
+                    <h3>5. Exportación y CI/CD</h3>
+                    <p>Docker Doctor es ideal para pipelines (Jenkins, GitHub Actions, GitLab CI). Puedes exportar los resultados del escaneo para guardarlos como artefactos o leerlos con otras herramientas usando los flags <code>--output</code> y <code>--file</code>.</p>
+                    <div class="code-box doc-code">
+                        <code># Exportar como reporte JSON para integraciones
+docker-doctor scan --output json --file report.json
+
+# Exportar como documento Markdown para Wikis
+docker-doctor scan --output md --file report.md
+
+# Generar una página HTML estática con los resultados
+docker-doctor scan --output html --file report.html</code>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Docker Doctor es un proyecto Open Source creado para ayudar a la comunidad DevOps.</p>
+        <p style="margin-top: 0.5rem;">Desarrollado con ❤️ por <a href="https://github.com/Cesar0202" target="_blank" style="color: var(--blue-accent); font-weight: 600; text-decoration: none;">Cesar Huaman</a></p>
+        <p style="margin-top: 0.5rem;"><a href="https://github.com/Cesar0202/docker-doctor" style="color: var(--text-muted); text-decoration: underline;">Ver repositorio del proyecto en GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
