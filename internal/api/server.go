@@ -27,7 +27,7 @@ func Serve(port int) error {
 	http.Handle("/", fileServer)
 
 	addr := fmt.Sprintf(":%d", port)
-	fmt.Printf("🚀 Servidor Web iniciado. Abre tu navegador en http://localhost%s\n", addr)
+	fmt.Printf("[INFO] Servidor Web iniciado. Abre tu navegador en http://localhost%s\n", addr)
 	
 	return http.ListenAndServe(addr, nil)
 }
