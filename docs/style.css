@@ -263,15 +263,6 @@ body {
 .card-right-1 { top: 60%; right: -5%; flex-direction: column; align-items: flex-start; }
 .card-right-2 { top: 15%; right: -2%; flex-direction: column; align-items: flex-start; }
 
-.check-icon, .info-icon { 
-    background: #f6f8fa; 
-    color: #24292f; 
-    border: 1px solid #d0d7de;
-}
-
-.card-text strong { display: block; font-size: 0.9rem; font-weight: 700; color: #0f172a;}
-.card-text span { display: block; font-size: 0.8rem; color: var(--text-muted); }
-
 .card-text strong { display: block; font-size: 0.9rem; font-weight: 700; color: #24292f;}
 .card-text span { display: block; font-size: 0.8rem; color: #57606a; }
 
