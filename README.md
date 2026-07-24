@@ -4,17 +4,15 @@ Docker Doctor no es solo un visor de datos, es un **Sistema Experto** diseñado 
 
 ## Características Principales
 
-- **Health Score Global (0-100)**: Recibe una calificación general del estado de tu entorno Docker ("Excelente", "Bueno", "Atención" o "Crítico"), además de un sistema de calificación por estrellas para cada categoría.
-- **Comparativa Histórica (Deltas)**: Almacenamiento local mediante SQLite. Compara automáticamente tu escaneo actual con el anterior y te dice si has mejorado o empeorado tu puntaje.
-- **Asistente Experto (Explain)**: Base de datos local que interpreta errores crípticos de Docker (como "Bind for 0.0.0.0:80 failed" o "No space left on device") y te explica la causa y solución.
-- **Reparación Interactiva (Fix)**: El comando `fix` busca imágenes dangling, contenedores detenidos y redes sin uso, y te permite eliminarlos interactivamente con un simple `Y/N`.
-- **Motor de Recomendaciones**: No solo detecta el problema, te lo explica indicando el motivo, el impacto, y el comando exacto recomendado. Las acciones prioritarias se ordenan por severidad.
-- **Detección de Conflictos de Puertos**: Escanea silenciosamente los puertos de tu sistema anfitrión para evitar conflictos antes de que levantes un contenedor (ej. detecta si PostgreSQL ya está usando el puerto 5432 localmente).
-- **Cálculo Real de Ahorro de Disco**: Te dice exactamente cuántos Megabytes (MB) o Gigabytes (GB) recuperarás al limpiar la basura.
-- **Escaneo de Seguridad**: Se integra con **Trivy** (si está instalado en tu sistema) para escanear tus imágenes en busca de vulnerabilidades CRITICAL y HIGH.
+- **Health Score Global (0-100)**: Recibe una calificación general del estado de tu entorno Docker ("Excelente", "Bueno", "Atención" o "Crítico"), además de un sistema de calificación por estrellas (`★★★★★`) para cada categoría (Contenedores, Imágenes, Volúmenes, Seguridad, etc.).
+- **Comparativa Histórica (Deltas)**: Almacenamiento local mediante SQLite. Compara automáticamente tu escaneo actual con el anterior y te dice si has mejorado o empeorado tu puntaje (ej. `88 -> 94 (Mejoró 6 pts)`).
+- **Asistente Proactivo Interactivo**: Permite detectar basura y limpiar el entorno automáticamente con el comando `fix`, interpretando además errores complejos usando una base de datos de conocimiento con `explain`.
+- **Motor de Recomendaciones**: No solo detecta el problema, te lo explica. Cada sugerencia incluye el motivo, el riesgo (Rendimiento, Seguridad, Estabilidad) y un nivel de prioridad visual.
+- **Cálculo Real de Ahorro de Disco**: Consulta la API de uso de disco de Docker para decirte exactamente cuántos Megabytes (MB) o Gigabytes (GB) recuperarás al limpiar la basura.
+- **Escaneo de Puertos Locales**: Detecta si hay servicios locales (como PostgreSQL en el puerto 5432) que puedan causar conflictos antes de levantar un contenedor.
 - **Analizador de Docker Compose**: Escanea de forma estática los archivos `docker-compose.yml` locales en busca de malas prácticas.
-- **Dashboard Web Interactivo**: Un servidor integrado que provee una interfaz gráfica construida en React, que muestra tus datos en tiempo real (Live Polling).
-- **Cero Dependencias**: Escrito en Go (Golang). El servidor web de React y la base de datos (pure-go SQLite) están **compilados dentro de un solo archivo binario**.
+- **Dashboard Web Interactivo y Minimalista**: Un servidor integrado que provee una interfaz gráfica hermosa y neutral, construida en React, que muestra tus datos en tiempo real (Live Polling).
+- **Cero Dependencias**: Escrito en Go (Golang). El servidor web de React, las plantillas y la base de datos (pure-go SQLite) están **compilados dentro de un solo archivo binario**. Puedes desplegarlo en cualquier servidor Linux, Windows o Mac sin instalar Node.js ni Python.
 
 ---
 
@@ -41,45 +39,39 @@ $env:GOOS="linux"; $env:GOARCH="amd64"; go build -o docker-doctor-linux main.go
 
 ## Uso y Comandos
 
-Una vez instalado (o usando el ejecutable), tienes a tu disposición los siguientes comandos:
+Una vez instalado, tienes a tu disposición los siguientes comandos principales:
 
 ### 1. Diagnóstico de Consola (CLI)
-Realiza un análisis rápido y genera recomendaciones con desglose matemático y acciones prioritarias directamente en tu terminal:
+Realiza un análisis rápido y genera recomendaciones de expertos directamente en tu terminal:
 ```bash
 docker-doctor scan
 ```
 
-### 2. Exportación a Formatos Externos (CI/CD, Documentación)
-Ideal para enviar el reporte a otros sistemas o guardarlo como evidencia:
-```bash
-# Formato JSON (Ideal para integraciones):
-docker-doctor scan --output json --file reporte.json
-
-# Formato Markdown (Ideal para wikis o Notion):
-docker-doctor scan --output md --file reporte.md
-
-# Formato HTML (Un archivo autónomo estilizado):
-docker-doctor scan --output html --file reporte.html
-```
-
-### 3. Reparación Interactiva (Fix)
-Asistente interactivo que busca problemas reparables (contenedores detenidos, imágenes dangling, etc.) y te permite limpiarlos rápidamente respondiendo `Y`:
+### 2. Asistente de Reparación Interactiva
+Limpia tu entorno automáticamente sin necesidad de teclear comandos manuales de prune:
 ```bash
 docker-doctor fix
 ```
 
-### 4. El Experto Local (Explain)
-Pide a Docker Doctor que te explique y diagnostique errores comunes y confusos de Docker:
+### 3. Experto Solucionador de Errores
+Explica errores crípticos de Docker (como `manifest unknown` o `conflict`) y te da comandos sugeridos:
 ```bash
-docker-doctor explain "Bind for 0.0.0.0:80 failed"
+docker-doctor explain "mensaje de error de docker"
 ```
 
-### 5. Historial y Tendencias
-Visualiza cómo ha evolucionado tu Health Score en el tiempo:
+### 4. Historial y Tendencias
+Muestra una tabla con el progreso de tu salud a lo largo del tiempo, o genera un gráfico ASCII en la terminal:
 ```bash
 docker-doctor history
-# Para dibujar una gráfica ASCII interactiva en la terminal:
 docker-doctor history --trend
+```
+
+### 5. Exportación a Formatos Externos (CI/CD, Documentación)
+Ideal para enviar el reporte a otros sistemas o guardarlo como evidencia:
+```bash
+docker-doctor scan --output json --file reporte.json
+docker-doctor scan --output md --file reporte.md
+docker-doctor scan --output html --file reporte.html
 ```
 
 ### 6. Dashboard Web en Tiempo Real
@@ -96,7 +88,6 @@ docker-doctor serve
 - **Golang**: Motor principal, concurrencia, integración con el socket/API de Docker, CLI (con la librería Cobra) y servidor HTTP.
 - **React + TypeScript + Vite**: Frontend embebido (`go:embed`) servido dinámicamente.
 - **SQLite (Pure-Go)**: Base de datos sin dependencias en C (`CGO_ENABLED=0`), facilitando la compilación cruzada.
-- **Trivy CLI**: Integración externa (solo si se detecta en el sistema) para un análisis de seguridad robusto sin engordar el binario.
 
 ## Contribuir
 ¡Las contribuciones (pull requests) y las estrellas en GitHub son siempre bienvenidas!
