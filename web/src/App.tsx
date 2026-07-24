@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Activity, Box, HardDrive, Network, Layers, ShieldCheck, ShieldAlert } from 'lucide-react';
+import { Activity, Box, HardDrive, Network, Layers, ShieldCheck, ShieldAlert, Lightbulb } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface ReportData {
@@ -9,6 +9,7 @@ interface ReportData {
   Volumes: { Total: number; Orphaned: number };
   Networks: { Total: number; Unused: number };
   Ports: { TotalExposed: number; InUse: number[] };
+  Recommendations?: { Level: string; Message: string; Command: string; }[];
 }
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
@@ -129,6 +130,27 @@ function App() {
               </PieChart>
             </ResponsiveContainer>
           </div>
+        </div>
+        <div className="chart-container">
+          <h2 className="chart-title"><Lightbulb size={20} style={{ verticalAlign: 'middle', marginRight: '8px', color: '#f59e0b' }}/> Recomendaciones de la IA</h2>
+          
+          {!d.Recommendations || d.Recommendations.length === 0 ? (
+            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              ¡Tu entorno está limpio y optimizado! No hay recomendaciones por ahora.
+            </div>
+          ) : (
+            <div className="recommendations-list">
+              {d.Recommendations.map((rec, idx) => (
+                <div key={idx} className={`recommendation-item ${rec.Level.toLowerCase()}`}>
+                  <div className="rec-level">{rec.Level}</div>
+                  <div className="rec-content">
+                    <p>{rec.Message}</p>
+                    <code className="rec-command">{rec.Command}</code>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
