@@ -80,17 +80,17 @@ var scanCmd = &cobra.Command{
 			if outputFile == "" {
 				outputFile = "report.json"
 			}
-			report.ExportJSON(data, outputFile)
+			report.ExportJSON(data, hr, lastScan, recs, outputFile)
 		case "html":
 			if outputFile == "" {
 				outputFile = "report.html"
 			}
-			report.ExportHTML(data, outputFile)
+			report.ExportHTML(data, hr, lastScan, recs, outputFile)
 		case "markdown", "md":
 			if outputFile == "" {
 				outputFile = "report.md"
 			}
-			report.ExportMarkdown(data, outputFile)
+			report.ExportMarkdown(data, hr, lastScan, recs, outputFile)
 		default:
 			report.PrintTerminalReport(data, hr, lastScan, recs)
 		}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"os"
+	"docker-doctor/internal/db"
 )
 
 const htmlTemplate = `<!DOCTYPE html>
@@ -22,6 +23,13 @@ const htmlTemplate = `<!DOCTYPE html>
         .success { border-color: #28a745; }
         .warning { border-color: #ffc107; }
         .danger { border-color: #dc3545; }
+        .health-score { font-size: 2em; text-align: center; margin: 20px 0; font-weight: bold; }
+        .health-score.good { color: #28a745; }
+        .health-score.warn { color: #ffc107; }
+        .health-score.crit { color: #dc3545; }
+        .recs { margin-top: 30px; }
+        .rec-item { background: #fff; padding: 15px; border-left: 4px solid #17a2b8; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .rec-item code { display: block; background: #e9ecef; padding: 10px; margin-top: 10px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -56,14 +64,35 @@ const htmlTemplate = `<!DOCTYPE html>
             </div>
             <div class="card">
                 <h3>Puertos</h3>
-                <p>Total Expuestos: <strong>{{.Ports.TotalExposed}}</strong></p>
+                <p>Total Expuestos: <strong>{{.ReportData.Ports.TotalExposed}}</strong></p>
             </div>
+        </div>
+
+        <h2 style="text-align:center; margin-top:30px;">Health Score</h2>
+        <div class="health-score {{if ge .Health.GlobalScore 90}}good{{else if ge .Health.GlobalScore 70}}warn{{else}}crit{{end}}">
+            {{.Health.GlobalScore}}/100 ({{.Health.StatusText}})
+        </div>
+
+        <div class="recs">
+            <h2>Recomendaciones de la IA</h2>
+            {{if .Recommendations}}
+                {{range .Recommendations}}
+                <div class="rec-item">
+                    <h4>[{{.Level}}] {{.Message}}</h4>
+                    {{if .Why}}<p><strong>¿Por qué importa?</strong> {{.Why}}</p>{{end}}
+                    {{if .Impact}}<p><strong>Impacto:</strong> {{.Impact}} | <strong>Riesgo:</strong> {{.Risk}}</p>{{end}}
+                    <code>{{.Command}}</code>
+                </div>
+                {{end}}
+            {{else}}
+                <p>¡Tu entorno está limpio y optimizado! No hay recomendaciones.</p>
+            {{end}}
         </div>
     </div>
 </body>
 </html>`
 
-func ExportHTML(data ReportData, filename string) error {
+func ExportHTML(data ReportData, hr HealthReport, lastScan db.ScanHistory, recs []Recommendation, filename string) error {
 	tmpl, err := template.New("report").Parse(htmlTemplate)
 	if err != nil {
 		return fmt.Errorf("error parseando plantilla HTML: %w", err)
@@ -75,7 +104,19 @@ func ExportHTML(data ReportData, filename string) error {
 	}
 	defer file.Close()
 
-	err = tmpl.Execute(file, data)
+	exportPayload := struct {
+		ReportData
+		Health          HealthReport
+		LastScan        db.ScanHistory
+		Recommendations []Recommendation
+	}{
+		ReportData:      data,
+		Health:          hr,
+		LastScan:        lastScan,
+		Recommendations: recs,
+	}
+
+	err = tmpl.Execute(file, exportPayload)
 	if err != nil {
 		return fmt.Errorf("error ejecutando plantilla HTML: %w", err)
 	}
