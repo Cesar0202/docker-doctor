@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="dashboard">
       <header className="header">
-        <h1><Activity size={36} color="#60a5fa" /> Docker Doctor</h1>
+        <h1><Activity size={24} color="#212529" /> Docker Doctor</h1>
         <div className={`header-status ${d.System.IsReachable ? 'online' : 'offline'}`}>
           {d.System.IsReachable ? <ShieldCheck size={20} /> : <ShieldAlert size={20} />}
           {d.System.IsReachable ? 'Sistema Operativo' : 'Daemon Inaccesible'}
@@ -122,8 +122,8 @@ function App() {
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.9)', border: 'none', borderRadius: '8px', color: '#fff' }}
-                  itemStyle={{ color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #dee2e6', borderRadius: '4px', color: '#212529' }}
+                  itemStyle={{ color: '#212529' }}
                 />
                 <Legend />
               </PieChart>
