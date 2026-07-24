@@ -60,6 +60,8 @@ func handleReport(w http.ResponseWriter, r *http.Request) {
 		Volumes:    analyzer.AnalyzeVolumes(ctx, client),
 		Networks:   analyzer.AnalyzeNetworks(ctx, client),
 		Ports:      analyzer.AnalyzePorts(ctx, client),
+		Security:   analyzer.AnalyzeSecurity(ctx, client),
+		Compose:    analyzer.AnalyzeCompose(),
 	}
 
 	recs := recommender.GenerateRecommendations(data)

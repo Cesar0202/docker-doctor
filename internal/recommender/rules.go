@@ -49,5 +49,39 @@ func GenerateRecommendations(data report.ReportData) []Recommendation {
 		})
 	}
 
+	// Reglas de seguridad (Trivy)
+	if data.Security.TotalVulnerabilities > 0 {
+		recs = append(recs, Recommendation{
+			Level:   "CRITICAL",
+			Message: "Trivy detectó vulnerabilidades HIGH/CRITICAL en las imágenes de tus contenedores. Revisa el reporte para más detalles y actualiza tus imágenes.",
+			Command: "docker pull <imagen> (luego reconstruye los contenedores)",
+		})
+	}
+
+	// Reglas de Docker Compose
+	if data.Compose.FileFound {
+		if len(data.Compose.MissingTags) > 0 {
+			recs = append(recs, Recommendation{
+				Level:   "WARNING",
+				Message: "En tu docker-compose usas imágenes sin tag específico (o con :latest). Esto causa inconsistencias en producción. Fija una versión (ej: node:18.16.0).",
+				Command: "Edita docker-compose.yml",
+			})
+		}
+		if len(data.Compose.ExposedPorts) > 0 {
+			recs = append(recs, Recommendation{
+				Level:   "WARNING",
+				Message: "Tienes puertos expuestos globalmente (0.0.0.0) en tu docker-compose.yml. Considera atarlos a 127.0.0.1 (ej: '127.0.0.1:8080:80') para mayor seguridad.",
+				Command: "Edita docker-compose.yml",
+			})
+		}
+		if len(data.Compose.PrivilegedSvcs) > 0 {
+			recs = append(recs, Recommendation{
+				Level:   "CRITICAL",
+				Message: "Tienes servicios corriendo en modo privilegiado (privileged: true). Esto es un riesgo de seguridad enorme. Evítalo si no es estrictamente necesario.",
+				Command: "Edita docker-compose.yml",
+			})
+		}
+	}
+
 	return recs
 }

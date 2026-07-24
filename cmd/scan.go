@@ -39,6 +39,8 @@ var scanCmd = &cobra.Command{
 		volStatus := analyzer.AnalyzeVolumes(ctx, client)
 		netStatus := analyzer.AnalyzeNetworks(ctx, client)
 		portStatus := analyzer.AnalyzePorts(ctx, client)
+		secStatus := analyzer.AnalyzeSecurity(ctx, client)
+		compStatus := analyzer.AnalyzeCompose()
 
 		data := report.ReportData{
 			System:     sysStatus,
@@ -47,6 +49,8 @@ var scanCmd = &cobra.Command{
 			Volumes:    volStatus,
 			Networks:   netStatus,
 			Ports:      portStatus,
+			Security:   secStatus,
+			Compose:    compStatus,
 		}
 
 		// Guardar el historial en la base de datos (ignorar errores para no detener la ejecución)

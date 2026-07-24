@@ -11,4 +11,6 @@ type ReportData struct {
 	Volumes    analyzer.VolumeAnalysis
 	Networks   analyzer.NetworkAnalysis
 	Ports      analyzer.PortAnalysis
+	Security   analyzer.SecurityStatus
+	Compose    analyzer.ComposeAnalysis
 }
