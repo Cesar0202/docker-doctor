@@ -211,34 +211,50 @@ body {
 /* Floating Cards */
 .floating-card {
     position: absolute;
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
+    background: #ffffff;
     padding: 1rem 1.5rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(27, 31, 36, 0.08);
+    border: 1px solid #d0d7de;
     display: flex;
     align-items: center;
     gap: 1rem;
-    text-align: left;
-    animation: float 6s ease-in-out infinite;
     z-index: 10;
+    transition: transform 0.2s ease;
 }
 
-.card-left-1 { top: 10%; left: 0%; animation-delay: 0s; }
-.card-left-2 { top: 50%; left: -5%; animation-delay: 1.5s; }
-.card-right-1 { top: 60%; right: 0%; flex-direction: column; align-items: flex-start; animation-delay: 3s; }
-.card-right-2 { top: 15%; right: 5%; flex-direction: column; align-items: flex-start; animation-delay: 1s; }
+.floating-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(27, 31, 36, 0.12);
+}
+
+.floating-card h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: #24292f;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.floating-card p {
+    font-size: 0.75rem;
+    color: #57606a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
 
 .card-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.card-left-1 { top: 10%; left: -5%; }
+.card-left-2 { top: 50%; left: -10%; }
+.card-right-1 { top: 60%; right: -5%; flex-direction: column; align-items: flex-start; }
+.card-right-2 { top: 15%; right: -2%; flex-direction: column; align-items: flex-start; }
 
 .check-icon { background: #fef3c7; color: #d97706; }
 .info-icon { background: #e0e7ff; color: #4f46e5; }
