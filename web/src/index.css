@@ -179,4 +179,108 @@ body {
   font-family: monospace;
   font-size: 0.85rem;
   color: #212529;
+  margin-top: 0.5rem;
+}
+
+.health-section {
+  background: var(--bg-color-accent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.health-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.health-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.health-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.health-score.good { background-color: #d1e7dd; color: #0f5132; }
+.health-score.warning { background-color: #fff3cd; color: #856404; }
+.health-score.critical { background-color: #f8d7da; color: #721c24; }
+
+.score-value { font-size: 1.25rem; }
+.score-status { font-size: 0.85rem; text-transform: uppercase; }
+
+.health-delta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.delta.up { color: var(--success); font-weight: 600; }
+.delta.down { color: var(--danger); font-weight: 600; }
+
+.health-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
+
+.health-cat {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.health-cat .stars {
+  color: #f59e0b;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.rec-message {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.rec-detail {
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  border-left: 3px solid #dee2e6;
+}
+
+.rec-detail strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.rec-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.rec-space {
+  color: var(--success);
+}
+
+.rec-cmd-box {
+  margin-top: 1rem;
 }

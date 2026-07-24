@@ -9,7 +9,24 @@ interface ReportData {
   Volumes: { Total: number; Orphaned: number };
   Networks: { Total: number; Unused: number };
   Ports: { TotalExposed: number; InUse: number[] };
-  Recommendations?: { Level: string; Message: string; Command: string; }[];
+  Recommendations?: { 
+    Level: string; 
+    Message: string; 
+    Command: string;
+    Why?: string;
+    Impact?: string;
+    Risk?: string;
+    RecoverableSpaceBytes?: number;
+  }[];
+  Health?: {
+    GlobalScore: number;
+    StatusText: string;
+    Categories: { Name: string; Stars: string; Score: number }[];
+  };
+  LastScan?: {
+    HealthScore: number;
+    RecoverableSpaceBytes: number;
+  };
 }
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
@@ -67,6 +84,38 @@ function App() {
           {d.System.IsReachable ? 'Sistema Operativo' : 'Daemon Inaccesible'}
         </div>
       </header>
+
+      {d.Health && (
+        <div className="health-section">
+          <div className="health-header">
+            <h2>Docker Health Score</h2>
+            <div className={`health-score ${d.Health.GlobalScore >= 90 ? 'good' : d.Health.GlobalScore >= 70 ? 'warning' : 'critical'}`}>
+              <span className="score-value">{d.Health.GlobalScore}/100</span>
+              <span className="score-status">{d.Health.StatusText}</span>
+            </div>
+          </div>
+          {d.LastScan && d.LastScan.HealthScore > 0 && (
+            <div className="health-delta">
+              Último análisis: {d.LastScan.HealthScore} &rarr; {d.Health.GlobalScore} 
+              {d.Health.GlobalScore > d.LastScan.HealthScore ? 
+                <span className="delta up"> (Mejoró {d.Health.GlobalScore - d.LastScan.HealthScore} pts)</span> : 
+                d.Health.GlobalScore < d.LastScan.HealthScore ? 
+                <span className="delta down"> (Empeoró {d.LastScan.HealthScore - d.Health.GlobalScore} pts)</span> : 
+                <span className="delta neutral"> (Sin cambios)</span>}
+            </div>
+          )}
+          <div className="health-categories">
+            {d.Health.Categories.map(cat => (
+              cat.Score >= 0 && (
+                <div key={cat.Name} className="health-cat">
+                  <span>{cat.Name}</span>
+                  <span className="stars">{cat.Stars}</span>
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid">
         <div className="card">
@@ -144,8 +193,27 @@ function App() {
                 <div key={idx} className={`recommendation-item ${rec.Level.toLowerCase()}`}>
                   <div className="rec-level">{rec.Level}</div>
                   <div className="rec-content">
-                    <p>{rec.Message}</p>
-                    <code className="rec-command">{rec.Command}</code>
+                    <p className="rec-message">{rec.Message}</p>
+                    
+                    {rec.Why && (
+                      <div className="rec-detail">
+                        <strong>¿Por qué importa?</strong>
+                        <p>{rec.Why}</p>
+                      </div>
+                    )}
+                    
+                    <div className="rec-meta">
+                      {rec.Impact && <span><strong>Impacto:</strong> {rec.Impact}</span>}
+                      {rec.Risk && <span><strong>Riesgo:</strong> {rec.Risk}</span>}
+                      {rec.RecoverableSpaceBytes && rec.RecoverableSpaceBytes > 0 ? (
+                        <span className="rec-space"><strong>Espacio recuperable:</strong> {Math.round(rec.RecoverableSpaceBytes / 1024 / 1024)} MB</span>
+                      ) : null}
+                    </div>
+
+                    <div className="rec-cmd-box">
+                      <strong>Comando recomendado:</strong>
+                      <code className="rec-command">{rec.Command}</code>
+                    </div>
                   </div>
                 </div>
               ))}
