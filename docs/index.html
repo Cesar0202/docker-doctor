@@ -157,40 +157,96 @@
     </section>
 
     <!-- Documentation & Install Section -->
-    <section id="install" class="section">
+    <section id="docs" class="section docs-section">
         <div class="section-header">
-            <h2>Instalación y Documentación</h2>
-            <p>Empieza a optimizar tu entorno en segundos. Solo requieres tener Go instalado o descargar los binarios pre-compilados.</p>
+            <h2>Documentación Oficial</h2>
+            <p>Aprende a integrar Docker Doctor en tu flujo de trabajo diario, desde tu terminal local hasta pipelines de integración continua.</p>
         </div>
         
-        <div id="docs" style="max-width: 800px; margin: 0 auto; text-align: left;">
-            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">1. Instalación Global (Recomendada)</h3>
-            <div class="code-box" style="margin-bottom: 2rem; width: 100%;">
-                <code id="install-code">go install github.com/Cesar0202/docker-doctor@latest</code>
-                <button class="copy-btn" onclick="copyCode()">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
+        <div class="docs-container">
+            <!-- Columna Izquierda: Índice -->
+            <div class="docs-sidebar">
+                <ul>
+                    <li><a href="#doc-install">1. Instalación</a></li>
+                    <li><a href="#doc-cli">2. Uso de la CLI</a></li>
+                    <li><a href="#doc-fix">3. Asistente Proactivo (Fix)</a></li>
+                    <li><a href="#doc-explain">4. Experto en Errores</a></li>
+                    <li><a href="#doc-cicd">5. Exportación y CI/CD</a></li>
+                </ul>
             </div>
 
-            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">2. Comandos Principales</h3>
-            <ul style="list-style-type: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-muted);">
-                <li style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <strong style="color: #0f172a; font-family: monospace; font-size: 1.1rem;">docker-doctor scan</strong>
-                    <br>Ejecuta el escaneo de salud principal en la terminal.
-                </li>
-                <li style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <strong style="color: #0f172a; font-family: monospace; font-size: 1.1rem;">docker-doctor fix</strong>
-                    <br>Abre el asistente interactivo de limpieza.
-                </li>
-                <li style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <strong style="color: #0f172a; font-family: monospace; font-size: 1.1rem;">docker-doctor explain "error"</strong>
-                    <br>Consulta la base de conocimientos sobre un error específico.
-                </li>
-                <li style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <strong style="color: #0f172a; font-family: monospace; font-size: 1.1rem;">docker-doctor history --trend</strong>
-                    <br>Muestra el historial y gráfico ASCII de tus escaneos anteriores.
-                </li>
-            </ul>
+            <!-- Columna Derecha: Contenido -->
+            <div class="docs-content">
+                
+                <div id="doc-install" class="doc-block">
+                    <h3>1. Instalación</h3>
+                    <p>Docker Doctor es un binario estático compilado en Go, lo que significa que no requiere dependencias como Node o Python. La forma recomendada es a través de <code>go install</code>:</p>
+                    <div class="code-box doc-code">
+                        <code id="install-code">go install github.com/Cesar0202/docker-doctor@latest</code>
+                        <button class="copy-btn" onclick="copyCode()">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                    </div>
+                    <p>Si usas Windows o no tienes Go, puedes descargar el ejecutable <code>doctor.exe</code> directamente desde los Releases en GitHub.</p>
+                </div>
+
+                <div id="doc-cli" class="doc-block">
+                    <h3>2. Uso de la CLI (Escaneo General)</h3>
+                    <p>Para obtener un diagnóstico rápido del estado de tus contenedores, redes, volúmenes e imágenes, ejecuta el comando principal. El motor evaluará métricas y te dará un <strong>Health Score</strong> sobre 100.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor scan</span><br>
+                            <span class="out">Iniciando escaneo de Docker...</span><br>
+                            <span class="out">Docker Health Score: [Excelente] 97/100</span><br>
+                            <span class="out">Evaluando puertos locales y docker-compose.yml...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-fix" class="doc-block">
+                    <h3>3. Asistente Proactivo (Fix)</h3>
+                    <p>Olvídate de buscar en Google cómo borrar contenedores detenidos o imágenes dangling. Docker Doctor detecta los problemas y te ofrece eliminarlos de forma interactiva y segura, calculando el ahorro exacto en Megabytes.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor fix</span><br>
+                            <span class="out">Problema: Tienes imágenes colgantes (dangling).</span><br>
+                            <span class="out">Ahorro estimado: 1.2 GB</span><br>
+                            <span class="out">¿Deseas aplicar el comando [docker image prune -f]? (s/N): s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-explain" class="doc-block">
+                    <h3>4. Experto en Errores (Explain)</h3>
+                    <p>Docker Doctor cuenta con una base de conocimiento para interpretar errores crípticos de Docker. Solo pégale el error y la IA estática te dirá qué significa y cómo resolverlo.</p>
+                    <div class="terminal-mockup">
+                        <div class="term-header"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="term-body">
+                            <span class="cmd">$ docker-doctor explain "no space left on device"</span><br>
+                            <span class="out">Diagnóstico: El disco duro donde Docker guarda sus datos está lleno.</span><br>
+                            <span class="out">Comandos útiles: docker system prune -a --volumes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="doc-cicd" class="doc-block">
+                    <h3>5. Exportación y CI/CD</h3>
+                    <p>Docker Doctor es ideal para pipelines (Jenkins, GitHub Actions, GitLab CI). Puedes exportar los resultados del escaneo para guardarlos como artefactos o leerlos con otras herramientas usando los flags <code>--output</code> y <code>--file</code>.</p>
+                    <div class="code-box doc-code">
+                        <code># Exportar como reporte JSON para integraciones
+docker-doctor scan --output json --file report.json
+
+# Exportar como documento Markdown para Wikis
+docker-doctor scan --output md --file report.md
+
+# Generar una página HTML estática con los resultados
+docker-doctor scan --output html --file report.html</code>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
